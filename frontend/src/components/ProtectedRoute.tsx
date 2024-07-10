@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 import api from "../api";
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants";
 import { useState, useEffect } from "react";
-import { Helmet } from "react-helmet";
+import BodyThemeManager from "./subcomponents/BodyThemeManager";
 
 interface Props {
   children: JSX.Element | null;
@@ -48,16 +48,16 @@ function ProtectedRoute({ children }: Props) {
       console.log(error);
     }
   };
+
   return isAuthorized ? (
     children
   ) : (
-    <div className="flex justify-center items-center w-screen mt-10">
-      <Helmet>
-        <style>{"body{@apply bg_poppy bg-fixed;}"}</style>
-      </Helmet>
+    <BodyThemeManager className="horizontally-centered mt-10">
       <div className="grid text-center">
-        <h1 className="text-3xl font-bold">You are not logged in</h1>
-        <h2 className="mt-1 text-xl font-bold">
+        <h1 className="mt-32 text-3xl font-bold text-white">
+          You are not logged in
+        </h1>
+        <h2 className="mt-1 text-xl font-bold text-white">
           Click a link below to redirect to a different page
         </h2>
         <button
@@ -77,7 +77,7 @@ function ProtectedRoute({ children }: Props) {
           Login
         </button>
       </div>
-    </div>
+    </BodyThemeManager>
   );
 }
 

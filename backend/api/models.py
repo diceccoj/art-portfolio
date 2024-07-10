@@ -19,7 +19,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     front_image = models.ImageField(null=True, blank=True, upload_to="images/")
     likes = models.IntegerField('Likes', blank=False, default=0)
-    colour_scheme = models.CharField('Colour Scheme', max_length=20, default="blue")
+    colour_scheme = models.CharField('Colour Scheme', max_length=20, default="sunset")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
 
     def __str__(self):

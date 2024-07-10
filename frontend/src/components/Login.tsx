@@ -3,6 +3,7 @@ import api from "../api";
 import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import LoadingIndicator from "./subcomponents/LoadingIndicator";
+import BodyThemeManager from "./subcomponents/BodyThemeManager";
 
 //The login page that will redirect the user if login is successful
 
@@ -30,27 +31,34 @@ function Login() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="">
-      <h1>{"Login"}</h1>
-      <input
-        className=""
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        placeholder="Username"
-      />
-      <input
-        className=""
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      {loading && <LoadingIndicator />}
-      <button className="" type="submit">
-        {"Login"}
-      </button>
-    </form>
+    <BodyThemeManager theme="poppy" className="centered">
+      <div className="grid text-center">
+        <form onSubmit={handleSubmit} className="grid">
+          <h1>{"Login"}</h1>
+          <input
+            className="mt-10 rounded-md pl-1 text-black"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
+          />
+          <input
+            className="mt-2 rounded-md pl-1 text-black"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
+          />
+          {loading && <LoadingIndicator />}
+          <button
+            className="mt-2 bg-emerald-400 rounded-lg focus:bg-emerald-500 hover:bg-emerald-300"
+            type="submit"
+          >
+            {"Login"}
+          </button>
+        </form>
+      </div>
+    </BodyThemeManager>
   );
 }
 
