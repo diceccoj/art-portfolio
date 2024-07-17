@@ -7,6 +7,7 @@ import SettingsCreateCategory from "./subcomponents/SettingsCreateCategory";
 function Logout() {
   localStorage.clear();
   window.location.href = "/";
+  sessionStorage.removeItem("csrftoken");
 }
 
 //returns a menu that can switch between tabs, each one either creating or deleting posts

@@ -1,4 +1,7 @@
 //A standard div which manages the body theme on render
+
+import { useEffect } from "react";
+
 //Note: all theming classes start with "bg_"
 interface Props {
   children?: JSX.Element | JSX.Element[] | string | null;
@@ -8,12 +11,13 @@ interface Props {
 
 const BodyThemeManager = ({ children, className, theme }: Props) => {
   let t: string;
+  useEffect(() => {});
   if (theme) {
     t = theme.toLowerCase();
     t = t.replace(/\s/g, ""); //removes spaces
     t = "bg_" + t;
   } else {
-    t = "bg_sunset";
+    t = "bg_";
   }
   //removes previous theme and adds new one
   const classes = document.body.className

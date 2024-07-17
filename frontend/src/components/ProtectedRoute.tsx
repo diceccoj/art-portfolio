@@ -52,7 +52,7 @@ function ProtectedRoute({ children }: Props) {
   return isAuthorized ? (
     children
   ) : (
-    <BodyThemeManager className="horizontally-centered mt-10">
+    <BodyThemeManager className="horizontally-centered mt-10" theme="sunset">
       <div className="grid text-center">
         <h1 className="mt-32 text-3xl font-bold text-white">
           You are not logged in

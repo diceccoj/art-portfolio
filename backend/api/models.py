@@ -34,4 +34,11 @@ class GalleryImage(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     image = models.ImageField(null=False, blank=True, upload_to="images/" + str(post))
     
-
+'''
+    Site-wide settings. Editable by admin only
+'''
+class Settings(models.Model):
+    name = models.CharField("Name", max_length=50)
+    value = models.CharField("Value", max_length=50)
+    def __str__(self):
+        return self.name

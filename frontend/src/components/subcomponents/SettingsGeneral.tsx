@@ -1,13 +1,33 @@
 import { useState } from "react";
+import api from "../../api";
+import CSRFToken from "./CSRFToken";
 
-function submit() {}
+api.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+api.defaults.xsrfCookieName = "csrftoken";
 
 const SettingsGeneral = () => {
   //For general section
   const [homeTheme, setHomeTheme] = useState("sunset");
 
+  //to confirm submition
+
+  const formSubmit = async (e) => {
+    e.preventDefault();
+    const dict = {
+      name: "HOME_THEME",
+      value: homeTheme,
+    };
+
+    //HOME_THEME has the id of 1
+    api.put("/api/settings/modify/1/", dict).then((response) => {
+      if (response.status == 200) alert("Theme changed successfully");
+      else alert("An error occured with modification of HOME_THEME");
+    });
+  };
+
   return (
-    <form onSubmit={submit} className="grid w-[300px]">
+    <form onSubmit={formSubmit} className="grid w-[300px]" method="put">
+      <CSRFToken />
       <h2 className="text-xl">General</h2>
       <h3 className="mt-5">{"Home Theme"}</h3>
       <select

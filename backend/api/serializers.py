@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Post, GalleryImage, Category
+from .models import Post, GalleryImage, Category, Settings
 
 
 #The user who can log in and post content. There exists only one user who is premade
@@ -34,3 +34,9 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ["id", "category_name"]
         extra_kwargs = {"category_name": {"read_only": True}}
+
+class SettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Settings
+        fields = ["id", "name", "value"]
+        

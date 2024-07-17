@@ -22,6 +22,11 @@ function Login() {
       const res = await api.post("/api/token/", { username, password });
       localStorage.setItem(ACCESS_TOKEN, res.data.access);
       localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
+      await api.get("/api/csrf/").then((response) => {
+        if (response.status == 200)
+          sessionStorage.setItem("csrftoken", response.data.csrfToken);
+        else alert("An error occured. Please refresh page.");
+      });
       navigate("/admin"); //navigate to admin on successful login
     } catch (error) {
       alert(error);
