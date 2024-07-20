@@ -1,25 +1,68 @@
 import { useState, useEffect } from "react";
-
-function submit() {}
+import api from "../../api";
+import CSRFToken from "./CSRFToken";
 
 const SettingsCreateCategory = () => {
   //For general section
   const [category, setCategory] = useState("");
+  const [categoryList, setCategoryList] = useState([]);
 
-  //only able to submit if title, description, and front image are not empty
+  //only able to submit if title isn't empty or already taken
   const [canSubmit, setCanSubmit] = useState(true);
   useEffect(() => {
-    if (category != "") {
+    if (category != "" && categoryList.indexOf(category) == -1) {
       setCanSubmit(true);
     } else {
       setCanSubmit(false);
     }
-  }, [category]);
+  }, [category, categoryList]);
+
+  //loops through category list and adds names to a list for display
+  const fetchCategoryList = () => {
+    api
+      .get("/api/categories/")
+      .then((response) => {
+        if (response.status == 200) {
+          let list = [];
+          for (const [id, name] of Object.entries(response.data)) {
+            list.push(name.category_name);
+          }
+          setCategoryList(list);
+        } else {
+          alert("Error occured. Please refresh page.");
+        }
+      })
+      .catch((err) => alert(err));
+  };
+
+  //run fetch on first render only
+  useEffect(() => {
+    fetchCategoryList();
+  }, []);
+
+  //post new category
+  const formSubmit = async (e) => {
+    e.preventDefault();
+
+    const dict = {
+      category_name: category,
+    };
+    api
+      .post("/api/categories/", dict)
+      .then((response) => {
+        if (response.status == 201) {
+          alert("Category created successfully");
+          categoryList.push(category);
+        } else alert("Task failed. Try again");
+      })
+      .catch((err) => alert(err));
+  };
 
   return (
     <>
       <h2 className="text-xl">Create Category</h2>
-      <form onSubmit={submit} className="w-[600px] h-[90%] flex">
+      <form onSubmit={formSubmit} className="w-[600px] h-[90%] flex">
+        <CSRFToken />
         <div className="w-[250px]">
           <h3 className="">{"Category Title"}</h3>
           <input
@@ -40,7 +83,13 @@ const SettingsCreateCategory = () => {
         </div>
         <div className="ml-8 w-[250px]">
           <h3>List of Existing Categories:</h3>
-          <div className="grid bg-slate-500 rounded-xl h-10"></div>
+          <div className="grid bg-slate-500 rounded-xl pt-2 pb-2">
+            {categoryList.map((value) => (
+              <p className="pl-2" key={value}>
+                {value}
+              </p>
+            ))}
+          </div>
         </div>
       </form>
     </>

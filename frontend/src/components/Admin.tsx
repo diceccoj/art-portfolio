@@ -16,8 +16,8 @@ const Admin = () => {
     "General",
     "Create Project",
     "Create Category",
-    "Delete Project",
-    "Delete Category",
+    "Edit/Delete Project",
+    "Edit/Delete Category",
   ];
 
   //For settings page

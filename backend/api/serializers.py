@@ -10,30 +10,23 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["id", "username", "password"]
         extra_kwargs = {"password": {"write_only": True}}
 
-    def create(self, validated_data):
-        print(validated_data)
-        user = User.objects.create_user(**validated_data)
-        return user
-
-
 class PostSerializer(serializers.ModelSerializer):
+    front_image = serializers.ImageField(required=False)
     class Meta:
         model = Post
         fields = ["id", "title", "description", "created_at", "front_image", "likes", "colour_scheme", "category"]
-        extra_kwargs = {"created_at": {"read_only": True}}
 
 
 class GalleryImageSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(required=False)
     class Meta:
         model = GalleryImage
         fields = ["id", "post", "image"]
-        extra_kwargs = {}
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ["id", "category_name"]
-        extra_kwargs = {"category_name": {"read_only": True}}
 
 class SettingsSerializer(serializers.ModelSerializer):
     class Meta:

@@ -2,14 +2,9 @@ import { useState } from "react";
 import api from "../../api";
 import CSRFToken from "./CSRFToken";
 
-api.defaults.xsrfHeaderName = "X-CSRFTOKEN";
-api.defaults.xsrfCookieName = "csrftoken";
-
 const SettingsGeneral = () => {
   //For general section
   const [homeTheme, setHomeTheme] = useState("sunset");
-
-  //to confirm submition
 
   const formSubmit = async (e) => {
     e.preventDefault();
@@ -19,10 +14,13 @@ const SettingsGeneral = () => {
     };
 
     //HOME_THEME has the id of 1
-    api.put("/api/settings/modify/1/", dict).then((response) => {
-      if (response.status == 200) alert("Theme changed successfully");
-      else alert("An error occured with modification of HOME_THEME");
-    });
+    api
+      .put("/api/settings/modify/1/", dict)
+      .then((response) => {
+        if (response.status == 200) alert("Theme changed successfully");
+        else alert("Task failed. Try again");
+      })
+      .catch((err) => alert(err));
   };
 
   return (

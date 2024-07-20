@@ -1,30 +1,112 @@
 import { useEffect, useState } from "react";
-
-function submit() {}
+import api from "../../api";
+import CSRFToken from "./CSRFToken";
 
 const SettingsCreateProject = () => {
   //For Create Project in Settings
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [projectTheme, setProjectTheme] = useState("sunset");
-  const [frontImage, setFrontImage] = useState("");
-  const [galleryImages, setGalleryImages] = useState("");
+  const [frontImage, setFrontImage] = useState({
+    title: "",
+    description: "",
+    image_url: "",
+  });
+  const [galleryImages, setGalleryImages] = useState(null);
   const [category, setCategory] = useState("");
+  const [categoryList, setCategoryList] = useState([]);
+
+  //determines if errors are present
+  const [errors, setErrors] = useState(false);
 
   //only able to submit if title, description, and front image are not empty
   const [canSubmit, setCanSubmit] = useState(true);
   useEffect(() => {
-    if (title != "" && description != "" && frontImage != "") {
+    if (title != "" && description != "" && frontImage.image_url != "") {
       setCanSubmit(true);
     } else {
       setCanSubmit(false);
     }
   }, [title, description, frontImage]);
 
+  //creates a list of all existing categories
+  const fetchCategoryList = () => {
+    api
+      .get("/api/categories/")
+      .then((response) => {
+        if (response.status == 200) {
+          let list = [];
+          for (const [id, object] of Object.entries(response.data)) {
+            list.push([object.id, object.category_name]);
+          }
+          setCategoryList(list);
+        } else {
+          alert("Error occured. Please refresh page.");
+        }
+      })
+      .catch((err) => alert(err));
+  };
+  useEffect(() => {
+    fetchCategoryList();
+  }, []);
+
+  //post new category
+  const formSubmit = async (e) => {
+    e.preventDefault();
+
+    let dict: FormData = new FormData();
+    dict.append("title", title);
+    dict.append("description", description);
+    dict.append("front_image", frontImage);
+    dict.append("colour_scheme", projectTheme);
+    dict.append("category", category);
+
+    api
+      .post("/api/posts/", dict)
+      .then((response) => {
+        if (response.status == 201) {
+          /*if post is uploaded, upload the gallery images, if one of them fails,
+           delete the main post (CASCADE will delete the succeeding gallery images)*/
+          const id = response.data.id;
+          if (galleryImages != null) {
+            for (const [key, val] of Object.entries(galleryImages)) {
+              if (!errors) {
+                dict = new FormData();
+                dict.append("post", id);
+                dict.append("image", val);
+                api
+                  .post("/api/galleryimages/", dict)
+                  .then((res) => {
+                    if (res.status != 201)
+                      throw new Error("Task failed. Try again");
+                  })
+                  .catch((err) => {
+                    alert(err);
+                    setErrors(true);
+                    api.delete("/api/posts/delete/" + id + "/");
+                  });
+              }
+            }
+          }
+          if (!errors) {
+            alert("Post created successfully");
+          }
+        } else alert("Task failed. Try again");
+      })
+      .catch((err) => alert(err));
+
+    setErrors(false);
+  };
+
   return (
     <>
       <h2 className="text-xl">Create Project</h2>
-      <form onSubmit={submit} className="w-[600px] h-[90%] flex">
+      <form
+        onSubmit={formSubmit}
+        className="w-[600px] h-[90%] flex"
+        encType="multipart/form-data"
+      >
+        <CSRFToken />
         <div>
           <h3 className="">{"Title"}</h3>
           <input
@@ -51,20 +133,20 @@ const SettingsCreateProject = () => {
           <input
             type="file"
             name="image"
-            accept="image/*"
-            value={frontImage}
+            accept="image/jpeg,image/png"
             id="id_image"
-            onChange={(e) => setFrontImage(e.target.value)}
+            onChange={(e) => setFrontImage(e.target.files[0])}
           />
           <p className="text-sm">Image to be displayed on homepage.</p>
           <h3 className="mt-5">{"Gallery Images"}</h3>
           <input
             type="file"
             name="image"
-            accept="image/*"
+            accept="image/jpeg,image/png"
             id="id_image"
-            value={galleryImages}
-            onChange={(e) => setGalleryImages(e.target.value)}
+            onChange={(e) => {
+              setGalleryImages(e.target.files);
+            }}
             multiple={true}
           />
           <p className="text-sm">
@@ -98,14 +180,19 @@ const SettingsCreateProject = () => {
             }
           />
           <h3 className="mt-5">{"Category"}</h3>
-          <input
-            className="rounded-md pl-1 text-black w-[250px]"
-            type="text"
-            value={category}
+          <select
+            name="project_theme"
+            id="project_category"
+            className="rounded-md pl-1 text-black"
             onChange={(e) => setCategory(e.target.value)}
-            placeholder="Title"
-            maxLength={50}
-          />
+          >
+            <option value={""}>{"--None--"}</option>
+            {categoryList.map((val) => (
+              <option value={val[0]} key={val[1]}>
+                {val[1]}
+              </option>
+            ))}
+          </select>
           <p className="text-sm">
             {"By default will be set to 'General' category"}
           </p>
