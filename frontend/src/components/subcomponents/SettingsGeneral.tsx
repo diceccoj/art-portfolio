@@ -8,6 +8,7 @@ const SettingsGeneral = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
+  const [errors, setErrors] = useState(false);
   const [avatar, setAvatar] = useState({
     title: "",
     description: "",
@@ -30,7 +31,7 @@ const SettingsGeneral = () => {
         if (response.status == 200) alert("Theme changed successfully");
         else alert("Task failed. Try again");
       })
-      .catch((err) => alert(err));
+      .catch(() => setErrors(true));
   };
 
   //NAME is id 4, EMAIL is id 5, DESCRIPTION is id 3
@@ -38,48 +39,42 @@ const SettingsGeneral = () => {
     e.preventDefault();
 
     //changing name
-    if (name != "") {
-      const dict1 = {
-        name: "NAME",
-        value: name,
-      };
-      api
-        .put("/api/settings/modify/4/", dict1)
-        .then((response) => {
-          if (response.status == 200) alert("Name changed successfully");
-          else alert("Task failed. Try again");
-        })
-        .catch((err) => alert(err));
-    }
+    const dict1 = {
+      name: "NAME",
+      value: name,
+    };
+    api
+      .put("/api/settings/modify/4/", dict1)
+      .then((response) => {
+        if (response.status != 200) setErrors(true);
+      })
+      .catch(() => setErrors(true));
     //changing email
-    if (email != "") {
-      const dict2 = {
-        name: "EMAIL",
-        value: email,
-      };
-      api
-        .put("/api/settings/modify/5/", dict2)
-        .then((response) => {
-          if (response.status == 200) alert("Email changed successfully");
-          else alert("Task failed. Try again");
-        })
-        .catch((err) => alert(err));
-    }
+    const dict2 = {
+      name: "EMAIL",
+      value: email,
+    };
+    api
+      .put("/api/settings/modify/5/", dict2)
+      .then((response) => {
+        if (response.status != 200) setErrors(true);
+      })
+      .catch(() => setErrors(true));
 
     //changing description
-    if (description != "") {
-      const dict3 = {
-        name: "DESCRIPTION",
-        value: description,
-      };
-      api
-        .put("/api/settings/modify/3/", dict3)
-        .then((response) => {
-          if (response.status == 200) alert("Description changed successfully");
-          else alert("Task failed. Try again");
-        })
-        .catch((err) => alert(err));
-    }
+    const dict3 = {
+      name: "DESCRIPTION",
+      value: description,
+    };
+    api
+      .put("/api/settings/modify/3/", dict3)
+      .then((response) => {
+        if (response.status != 200) setErrors(true);
+      })
+      .catch(() => setErrors(true));
+
+    if (!errors) alert("Name, Email, and Description changed successfully!");
+    else alert("An error occured, try again.");
   };
 
   const formSubmitAvatar = async (e) => {
@@ -105,6 +100,33 @@ const SettingsGeneral = () => {
     else setCanSubmitAv(true);
   }, [name, description, email, avatar.image_url]);
 
+  //trigger the following on page load
+  const fetchInformation = async () => {
+    await api.get("/api/settings/").then((response) => {
+      if (response.status == 200) {
+        for (const [id, object] of Object.entries(response.data)) {
+          switch (object.name) {
+            case "HOME_THEME":
+              setHomeTheme(object.value);
+              break;
+            case "NAME":
+              setName(object.value);
+              break;
+            case "EMAIL":
+              setEmail(object.value);
+              break;
+            case "DESCRIPTION":
+              setDescription(object.value);
+              break;
+          }
+        }
+      }
+    });
+  };
+  useEffect(() => {
+    fetchInformation();
+  }, []);
+
   return (
     <div className="flex h-[50%]">
       <form
@@ -118,6 +140,7 @@ const SettingsGeneral = () => {
         <select
           name="home_theme"
           id="home_theme"
+          value={homeTheme}
           className="rounded-md pl-1 text-black h-[30px] "
           onChange={(e) => setHomeTheme(e.target.value)}
         >
@@ -158,7 +181,7 @@ const SettingsGeneral = () => {
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Leave empty to keep the same."
+          placeholder=""
           maxLength={50}
         />
         <h3 className="mt-5">{"Email"}</h3>
@@ -167,7 +190,7 @@ const SettingsGeneral = () => {
           type="text"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Leave empty to keep the same."
+          placeholder=""
           maxLength={50}
         />
         <h3 className="mt-5">{"Description"}</h3>
@@ -175,7 +198,7 @@ const SettingsGeneral = () => {
           className="rounded-md pl-1 text-black h-[200px] w-[250px]"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Leave empty to keep the same."
+          placeholder=""
           maxLength={500}
         />
         <button

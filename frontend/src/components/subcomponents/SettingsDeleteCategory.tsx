@@ -89,6 +89,14 @@ const SettingsDeleteCategory = () => {
   return _id == -1 ? (
     <>
       <h1>Categories</h1>
+      <div className="bg-red-400 outline outline-2 outline-red-800 w-full h-16 rounded-md">
+        <p className="font-bold ml-2 mt-2">{"Warning:"}</p>
+        <p className="ml-2 mt-2 mr-2">
+          {
+            "Deleting categories will delete all posts under it, only remove them if you are sure. You may also rename them with without any cost."
+          }
+        </p>
+      </div>
       <div className="h-[90%] w-[50vw] overflow-y-scroll">
         <div className=" responsive-grid mt-10 ">
           {categoryList.map((val) => (
@@ -108,6 +116,7 @@ const SettingsDeleteCategory = () => {
   ) : (
     <>
       <h2 className="text-xl">Edit Category</h2>
+
       <form onSubmit={formSubmit} className="w-[600px] h-[90%] flex">
         <CSRFToken />
         <div className="w-[250px]">

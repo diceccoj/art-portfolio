@@ -47,7 +47,7 @@ body {
     }
 
     .horizontally-centered {
-        @apply flex justify-center items-center w-full h-full
+        @apply flex justify-center  w-full h-full
     }
 
 }
