@@ -52,7 +52,7 @@ const SettingsCreateCategory = () => {
       .then((response) => {
         if (response.status == 201) {
           alert("Category created successfully");
-          categoryList.push(category);
+          fetchCategoryList();
         } else alert("Task failed. Try again");
       })
       .catch((err) => alert(err));

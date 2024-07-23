@@ -37,7 +37,7 @@ function Login() {
 
   return (
     <BodyThemeManager theme="poppy" className="centered">
-      <div className="grid text-center">
+      <div className="grid text-center mt-80">
         <form onSubmit={handleSubmit} className="grid">
           <h1>{"Login"}</h1>
           <input

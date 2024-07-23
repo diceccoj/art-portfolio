@@ -33,17 +33,21 @@ body {
     h3 {
         @apply text-lg
     }
+    .small-text-bg { /*Small text bg that gains opacity and scale on hover (Mainly used for navbar elements)*/
+        @apply   font-bold text-xl bg-slate-300 bg-opacity-40 rounded-xl px-2 shadow-md hover:shadow-xl hover:scale-105 transition-all;
+
+    }
 
     div, p {
         @apply text-white drop-shadow-sm;
     }
 
     .centered {
-        @apply flex justify-center items-center w-screen h-screen
+        @apply flex justify-center items-center w-full h-full
     }
 
     .horizontally-centered {
-        @apply flex justify-center items-center w-screen
+        @apply flex justify-center items-center w-full h-full
     }
 
 }
