@@ -3,6 +3,7 @@ import Post from "./Post";
 import api from "../../api";
 import LoadingIndicator from "./LoadingIndicator";
 import CSRFToken from "./CSRFToken";
+import { CategoryInterface, PostInterface } from "../Interfaces";
 
 //The general post selection. Click to edit contents
 const PostPanel = () => {
@@ -13,7 +14,7 @@ const PostPanel = () => {
   const [canSubmit, setCanSubmit] = useState(true);
   //the steps for delete. Will delete when counter hits 3
   const [deleteCounter, setDeleteCounter] = useState(1);
-  const [categoryList, setCategoryList] = useState([]);
+  const [categoryList, setCategoryList] = useState<(string | number)[][]>([]);
 
   const [_id, _setId] = useState(-1);
   const [title, setTitle] = useState("");
@@ -53,8 +54,11 @@ const PostPanel = () => {
       .get("/api/categories/")
       .then((response) => {
         if (response.status == 200) {
-          let list = [];
-          for (const [id, object] of Object.entries(response.data)) {
+          const list = [];
+          const iter: [string, CategoryInterface][] = Object.entries(
+            response.data
+          );
+          for (const [id, object] of iter) {
             list.push([object.id, object.category_name]);
           }
           setCategoryList(list);
@@ -70,7 +74,6 @@ const PostPanel = () => {
 
   const formSubmit = async (e) => {
     e.preventDefault();
-
     const dict = {
       title: title,
       description: description,
@@ -135,9 +138,9 @@ const PostPanel = () => {
       <div className="h-[90%] w-[50vw] overflow-y-scroll">
         <div className=" responsive-grid mt-10 ">
           {posts.length > 0 ? (
-            posts.map((info) => (
+            posts.map((info: PostInterface) => (
               <Post
-                _key={parseInt(info.id)}
+                _key={parseInt(info.id.toString())}
                 info={info}
                 picture={false}
                 onClick={() => setInfo(info)}

@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
 import api from "../../api";
 import CSRFToken from "./CSRFToken";
+import { CategoryInterface } from "../Interfaces";
 
 const SettingsCreateProject = () => {
   //For Create Project in Settings
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [projectTheme, setProjectTheme] = useState("sunset");
-  const [frontImage, setFrontImage] = useState({
-    title: "",
-    description: "",
-    image_url: "",
-  });
-  const [galleryImages, setGalleryImages] = useState(null);
+  const [frontImage, setFrontImage] = useState<File>();
+  const [galleryImages, setGalleryImages] = useState<FileList>(null);
   const [category, setCategory] = useState("");
   const [categoryList, setCategoryList] = useState([]);
 
@@ -22,7 +19,7 @@ const SettingsCreateProject = () => {
   //only able to submit if title, description, and front image are not empty
   const [canSubmit, setCanSubmit] = useState(true);
   useEffect(() => {
-    if (title != "" && description != "" && frontImage.image_url != "") {
+    if (title != "" && description != "" && frontImage?.name) {
       setCanSubmit(true);
     } else {
       setCanSubmit(false);
@@ -35,8 +32,11 @@ const SettingsCreateProject = () => {
       .get("/api/categories/")
       .then((response) => {
         if (response.status == 200) {
-          let list = [];
-          for (const [id, object] of Object.entries(response.data)) {
+          const list = [];
+          const iter: [string, CategoryInterface][] = Object.entries(
+            response.data
+          );
+          for (const [id, object] of iter) {
             list.push([object.id, object.category_name]);
           }
           setCategoryList(list);
@@ -69,7 +69,8 @@ const SettingsCreateProject = () => {
            delete the main post (CASCADE will delete the succeeding gallery images)*/
           const id = response.data.id;
           if (galleryImages != null) {
-            for (const [key, val] of Object.entries(galleryImages)) {
+            const iter: [string, File][] = Object.entries(galleryImages);
+            for (const [key, val] of iter) {
               if (!errors) {
                 dict = new FormData();
                 dict.append("post", id);

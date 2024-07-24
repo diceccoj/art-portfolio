@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../api";
+import { SettingsInterface } from "../Interfaces";
 
 const Footer = () => {
   const [name, setName] = useState("");
@@ -8,7 +9,10 @@ const Footer = () => {
   const fetchInformation = async () => {
     api.get("/api/settings/").then((response) => {
       if (response.status == 200) {
-        for (const [id, object] of Object.entries(response.data)) {
+        const iter: [string, SettingsInterface][] = Object.entries(
+          response.data
+        );
+        for (const [id, object] of iter) {
           if (object.name == "NAME") setName(object.value);
           if (object.name == "EMAIL") setEmail(object.value);
         }

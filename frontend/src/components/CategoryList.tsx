@@ -6,12 +6,14 @@ import { FaHome } from "react-icons/fa";
 import RevealOnScroll from "./subcomponents/RevealOnScroll";
 import Post from "./subcomponents/Post";
 import Footer from "./subcomponents/Footer";
+import { PostInterface, SettingsInterface } from "./Interfaces";
 
 const CategoryList = () => {
   const { id } = useParams();
 
   const [category, setCategory] = useState("");
   const [postList, setPostList] = useState([]);
+  const [homeTheme, setHomeTheme] = useState("");
   const [errors, setErrors] = useState(false);
 
   const fetchInformation = async () => {
@@ -34,10 +36,30 @@ const CategoryList = () => {
       .then((response) => {
         if (response.status == 200) {
           const list = [];
-          for (const [_id, object] of Object.entries(response.data)) {
+          const iter: [string, PostInterface][] = Object.entries(response.data);
+          for (const [_id, object] of iter) {
+            console.log(id + " " + typeof id);
             if (id != "null" || object.category == null) list.push(object);
           }
           setPostList(list);
+        }
+      })
+      .catch(() => setErrors(true));
+
+    api
+      .get("/api/settings/")
+      .then((response) => {
+        if (response.status == 200) {
+          const iter: [string, SettingsInterface][] = Object.entries(
+            response.data
+          );
+          for (const [id, object] of iter) {
+            switch (object.name) {
+              case "HOME_THEME":
+                setHomeTheme(object.value);
+                break;
+            }
+          }
         }
       })
       .catch(() => setErrors(true));
@@ -50,7 +72,7 @@ const CategoryList = () => {
   }, []);
 
   return (
-    <BodyThemeManager theme="jungle">
+    <BodyThemeManager theme={homeTheme}>
       <button onClick={() => (window.location.href = "/")}>
         <FaHome className="scale-150 mt-7 ml-7" />
       </button>

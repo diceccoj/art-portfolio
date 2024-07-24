@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../../api";
 import CSRFToken from "./CSRFToken";
+import { CategoryInterface } from "../Interfaces";
 
 const SettingsDeleteCategory = () => {
   //for category list
@@ -18,8 +19,11 @@ const SettingsDeleteCategory = () => {
       .get("/api/categories/")
       .then((response) => {
         if (response.status == 200) {
-          let list = [];
-          for (const [id, object] of Object.entries(response.data)) {
+          const list = [];
+          const iter: [string, CategoryInterface][] = Object.entries(
+            response.data
+          );
+          for (const [id, object] of iter) {
             list.push([object.id, object.category_name]);
           }
           setCategoryList(list);
@@ -97,7 +101,7 @@ const SettingsDeleteCategory = () => {
           }
         </p>
       </div>
-      <div className="h-[90%] w-[50vw] overflow-y-scroll">
+      <div className="h-[90%] w-[50vw] overflow-y-scroll mt-3">
         <div className=" responsive-grid mt-10 ">
           {categoryList.map((val) => (
             <button

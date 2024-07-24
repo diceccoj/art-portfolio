@@ -6,6 +6,25 @@ import { FaHome } from "react-icons/fa";
 import RevealOnScroll from "./subcomponents/RevealOnScroll";
 import Post from "./subcomponents/Post";
 import Footer from "./subcomponents/Footer";
+import { PostInterface } from "./Interfaces";
+
+//for shuffling recommendations array
+function shuffle(array) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+    // Pick a remaining element...
+    const randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
+}
 
 const PostDetails = () => {
   const { id } = useParams();
@@ -65,11 +84,15 @@ const PostDetails = () => {
         .get("/api/posts/unauth/?category=" + category)
         .then((response) => {
           if (response.status == 200) {
-            let list = [];
+            const list = [];
             let count = 0;
-            for (const [_id, object] of Object.entries(response.data)) {
+            shuffle(response.data);
+            const iter: [string, PostInterface][] = Object.entries(
+              response.data
+            );
+            for (const [_id, object] of iter) {
               if (count == 3) break;
-              if (_id != id) {
+              if (id != object.id.toString()) {
                 count++;
                 list.push(object);
               }

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import api from "../../api";
 import CSRFToken from "./CSRFToken";
+import { CategoryInterface } from "../Interfaces";
 
 const SettingsCreateCategory = () => {
   //For general section
@@ -23,9 +24,12 @@ const SettingsCreateCategory = () => {
       .get("/api/categories/")
       .then((response) => {
         if (response.status == 200) {
-          let list = [];
-          for (const [id, name] of Object.entries(response.data)) {
-            list.push(name.category_name);
+          const list = [];
+          const iter: [string, CategoryInterface][] = Object.entries(
+            response.data
+          );
+          for (const [id, object] of iter) {
+            list.push(object.category_name);
           }
           setCategoryList(list);
         } else {

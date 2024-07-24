@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../../api";
 import CSRFToken from "./CSRFToken";
+import { SettingsInterface } from "../Interfaces";
 
 const SettingsGeneral = () => {
   //For general section
@@ -9,11 +10,7 @@ const SettingsGeneral = () => {
   const [email, setEmail] = useState("");
   const [description, setDescription] = useState("");
   const [errors, setErrors] = useState(false);
-  const [avatar, setAvatar] = useState({
-    title: "",
-    description: "",
-    image_url: "",
-  });
+  const [avatar, setAvatar] = useState<File>();
   const [canSubmitND, setCanSubmitND] = useState(false);
   const [canSubmitAv, setCanSubmitAv] = useState(false);
 
@@ -96,15 +93,19 @@ const SettingsGeneral = () => {
     if (name == "" && description == "" && email == "") setCanSubmitND(false);
     else setCanSubmitND(true);
 
-    if (avatar.image_url == "") setCanSubmitAv(false);
-    else setCanSubmitAv(true);
-  }, [name, description, email, avatar.image_url]);
+    if (!avatar?.name) {
+      setCanSubmitAv(false);
+    } else setCanSubmitAv(true);
+  }, [name, description, email, avatar]);
 
   //trigger the following on page load
   const fetchInformation = async () => {
     await api.get("/api/settings/").then((response) => {
       if (response.status == 200) {
-        for (const [id, object] of Object.entries(response.data)) {
+        const iter: [string, SettingsInterface][] = Object.entries(
+          response.data
+        );
+        for (const [id, object] of iter) {
           switch (object.name) {
             case "HOME_THEME":
               setHomeTheme(object.value);

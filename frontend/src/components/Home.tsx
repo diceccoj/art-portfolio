@@ -4,6 +4,7 @@ import BodyThemeManager from "./subcomponents/BodyThemeManager";
 import Post from "./subcomponents/Post";
 import RevealOnScroll from "./subcomponents/RevealOnScroll";
 import Footer from "./subcomponents/Footer";
+import { PostInterface, SettingsInterface } from "./Interfaces";
 
 const Home = () => {
   const [homeTheme, setHomeTheme] = useState("");
@@ -50,8 +51,9 @@ const Home = () => {
       .get("/api/posts/unauth/")
       .then((response) => {
         if (response.status == 200) {
-          let list = [];
-          for (const [id, object] of Object.entries(response.data)) {
+          const list = [];
+          const iter: [string, PostInterface][] = Object.entries(response.data);
+          for (const [id, object] of iter) {
             list.push(object);
           }
           setPostList(list);
@@ -66,22 +68,23 @@ const Home = () => {
       .get("/api/settings/")
       .then((response) => {
         if (response.status == 200) {
-          for (const [id, object] of Object.entries(response.data)) {
-            if (object.name) {
-              switch (object.name) {
-                case "HOME_THEME":
-                  setHomeTheme(object.value);
-                  break;
-                case "NAME":
-                  setName(object.value);
-                  break;
-                case "EMAIL":
-                  setEmail(object.value);
-                  break;
-                case "DESCRIPTION":
-                  setDescription(object.value);
-                  break;
-              }
+          const iter: [string, SettingsInterface][] = Object.entries(
+            response.data
+          );
+          for (const [id, object] of iter) {
+            switch (object.name) {
+              case "HOME_THEME":
+                setHomeTheme(object.value);
+                break;
+              case "NAME":
+                setName(object.value);
+                break;
+              case "EMAIL":
+                setEmail(object.value);
+                break;
+              case "DESCRIPTION":
+                setDescription(object.value);
+                break;
             }
           }
         }
@@ -98,7 +101,7 @@ const Home = () => {
 
   //for filtering posts by category
   const filterPosts = (category_id: number | null) => {
-    let list = [];
+    const list = [];
     postList.forEach((object) => {
       if (object.category == category_id) {
         list.push(object);
