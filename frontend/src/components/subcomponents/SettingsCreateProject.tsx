@@ -194,7 +194,7 @@ const SettingsCreateProject = () => {
             ))}
           </select>
           <p className="text-sm">
-            {"By default will be set to 'General' category"}
+            {"By default will be set to 'Other' category"}
           </p>
 
           <button

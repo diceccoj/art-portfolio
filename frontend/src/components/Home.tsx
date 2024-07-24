@@ -29,7 +29,7 @@ const Home = () => {
       .get("/api/categories/unauth/")
       .then((response) => {
         if (response.status == 200) {
-          let list = [];
+          const list = [];
           for (const [id, object] of Object.entries(response.data)) {
             list.push(object);
           }
@@ -67,19 +67,21 @@ const Home = () => {
       .then((response) => {
         if (response.status == 200) {
           for (const [id, object] of Object.entries(response.data)) {
-            switch (object.name) {
-              case "HOME_THEME":
-                setHomeTheme(object.value);
-                break;
-              case "NAME":
-                setName(object.value);
-                break;
-              case "EMAIL":
-                setEmail(object.value);
-                break;
-              case "DESCRIPTION":
-                setDescription(object.value);
-                break;
+            if (object.name) {
+              switch (object.name) {
+                case "HOME_THEME":
+                  setHomeTheme(object.value);
+                  break;
+                case "NAME":
+                  setName(object.value);
+                  break;
+                case "EMAIL":
+                  setEmail(object.value);
+                  break;
+                case "DESCRIPTION":
+                  setDescription(object.value);
+                  break;
+              }
             }
           }
         }

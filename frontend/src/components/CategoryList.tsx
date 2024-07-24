@@ -16,14 +16,18 @@ const CategoryList = () => {
 
   const fetchInformation = async () => {
     const search = id != "null" ? id.toString() : "";
-    api
-      .get("/api/categories/unauth/?id=" + search)
-      .then((response) => {
-        if (response.status == 200 && response.data[0].category_name) {
-          setCategory(response.data[0].category_name);
-        }
-      })
-      .catch(() => setErrors(true));
+    if (id == "null") {
+      setCategory("Other");
+    } else {
+      api
+        .get("/api/categories/unauth/?id=" + search)
+        .then((response) => {
+          if (response.status == 200 && response.data[0].category_name) {
+            setCategory(response.data[0].category_name);
+          }
+        })
+        .catch(() => setErrors(true));
+    }
 
     api
       .get("/api/posts/unauth/?category=" + search)
@@ -31,7 +35,7 @@ const CategoryList = () => {
         if (response.status == 200) {
           const list = [];
           for (const [_id, object] of Object.entries(response.data)) {
-            list.push(object);
+            if (id != "null" || object.category == null) list.push(object);
           }
           setPostList(list);
         }
