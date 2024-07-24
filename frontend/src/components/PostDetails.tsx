@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import api from "../../api";
-import BodyThemeManager from "./BodyThemeManager";
+import api from "../api";
+import BodyThemeManager from "./subcomponents/BodyThemeManager";
 import { FaHome } from "react-icons/fa";
-import RevealOnScroll from "./RevealOnScroll";
-import Post from "./Post";
-import Footer from "./Footer";
+import RevealOnScroll from "./subcomponents/RevealOnScroll";
+import Post from "./subcomponents/Post";
+import Footer from "./subcomponents/Footer";
+
 const PostDetails = () => {
   const { id } = useParams();
   const [errors, setErrors] = useState(false);
@@ -137,11 +138,11 @@ const PostDetails = () => {
         <RevealOnScroll>
           {recommendations.length > 0 && (
             <>
-              <h1 className="text-center mt-32 text-6xl">
+              <h1 className="text-center mt-32 text-6xl ml-2 mr-2">
                 Other Posts in this Category
               </h1>
-              <div className="horizontally-centered mt-10">
-                <div className="responsive-grid-3 w-[90%]">
+              <div className="horizontally-centered ">
+                <div className="responsive-grid-3  scale-75">
                   {recommendations.map((post) => (
                     <div key={post.id}>
                       <Post

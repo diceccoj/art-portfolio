@@ -112,7 +112,7 @@ const Home = () => {
           <div className="responsive-grid w-[80%]">
             <img
               src={avatar}
-              className=" bg-white active:bg-slate-300 w-[90%] rounded-lg p-3 m-5 shadow-md  hover:scale-[102%] transition-transform "
+              className="origin-center scale-75 bg-white active:bg-slate-300 w-[90%] rounded-lg p-3 m-5 shadow-md  hover:scale-[78%] transition-transform "
             ></img>
             <div className="mt-10">
               <h1 className="text-8xl italic text-center hover:scale-[102%] transition-transform">
@@ -135,20 +135,32 @@ const Home = () => {
                   </h1>
                   <div className="horizontally-centered mt-10">
                     <div className="responsive-grid-3 w-[90%]">
-                      {filterPosts(cat.id).map((post) => (
-                        <div
-                          className="justify-center items-center flex"
-                          key={post.id}
-                        >
-                          <Post
-                            info={post}
-                            onClick={() =>
-                              (window.location.href = "/post/" + post.id)
-                            }
-                          />
-                        </div>
-                      ))}
+                      {filterPosts(cat.id)
+                        .slice(0, 3)
+                        .map((post) => (
+                          <div
+                            className="justify-center items-center flex"
+                            key={post.id}
+                          >
+                            <Post
+                              info={post}
+                              onClick={() =>
+                                (window.location.href = "/post/" + post.id)
+                              }
+                            />
+                          </div>
+                        ))}
                     </div>
+                  </div>
+                  <div className="horizontally-centered">
+                    <button
+                      className="text-center w-[90%] min-h-[40px] bg-white shadow-md hover:scale-[102%] transition-all hover:shadow-lg active:bg-slate-300 text-slate-700 font-bold rounded-full"
+                      onClick={() =>
+                        (window.location.href = "/category/" + cat.id)
+                      }
+                    >
+                      {"See more from " + cat.category_name}
+                    </button>
                   </div>
                 </RevealOnScroll>
               )

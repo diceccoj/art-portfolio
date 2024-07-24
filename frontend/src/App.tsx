@@ -4,7 +4,8 @@ import Login from "./components/Login";
 import "./App.css";
 import Admin from "./components/Admin";
 import Home from "./components/Home";
-import PostDetails from "./components/subcomponents/PostDetails";
+import PostDetails from "./components/PostDetails";
+import CategoryList from "./components/CategoryList";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           }
         />
         <Route path="/post/:id" element={<PostDetails />} />
+        <Route path="/category/:id" element={<CategoryList />} />
       </Routes>
     </BrowserRouter>
   );
