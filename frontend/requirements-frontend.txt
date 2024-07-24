@@ -2,3 +2,4 @@ axios
 tailwind
 react-router-dom
 jwt-token
+react-icons

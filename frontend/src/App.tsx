@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import "./App.css";
 import Admin from "./components/Admin";
 import Home from "./components/Home";
+import PostDetails from "./components/subcomponents/PostDetails";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="/post/:id" element={<PostDetails />} />
       </Routes>
     </BrowserRouter>
   );

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import api from "../api";
 import BodyThemeManager from "./subcomponents/BodyThemeManager";
 import Post from "./subcomponents/Post";
+import RevealOnScroll from "./subcomponents/RevealOnScroll";
+import Footer from "./subcomponents/Footer";
 
 const Home = () => {
   const [homeTheme, setHomeTheme] = useState("");
@@ -31,6 +33,11 @@ const Home = () => {
           for (const [id, object] of Object.entries(response.data)) {
             list.push(object);
           }
+          list.push({
+            //adding a no category option
+            id: null,
+            category_name: "Other",
+          });
           setCategoryList(list);
         } else {
           alert("Error occured. Please refresh page.");
@@ -88,10 +95,9 @@ const Home = () => {
   }, []);
 
   //for filtering posts by category
-  const filterPosts = (category_id: number) => {
+  const filterPosts = (category_id: number | null) => {
     let list = [];
     postList.forEach((object) => {
-      console.log(object);
       if (object.category == category_id) {
         list.push(object);
       }
@@ -102,8 +108,8 @@ const Home = () => {
   return (
     homeTheme != "" && (
       <BodyThemeManager theme={homeTheme}>
-        <div className="horizontally-centered mt-40">
-          <div className="responsive-grid  w-[80%]">
+        <RevealOnScroll className="horizontally-centered mt-40">
+          <div className="responsive-grid w-[80%]">
             <img
               src={avatar}
               className=" bg-white active:bg-slate-300 w-[90%] rounded-lg p-3 m-5 shadow-md  hover:scale-[102%] transition-transform "
@@ -118,28 +124,37 @@ const Home = () => {
               <p className="small-text-bg mt-2">{description}</p>
             </div>
           </div>
-        </div>
+        </RevealOnScroll>
         <div className="horizontally-centered w-[100%] grid">
           {categoryList.map(
             (cat) =>
               filterPosts(cat.id).length > 0 && (
-                <div key={cat.id} className="w-max h-max">
+                <RevealOnScroll key={cat.id} className="w-max h-max">
                   <h1 className="text-center mt-32 text-6xl">
                     {cat.category_name}
                   </h1>
                   <div className="horizontally-centered mt-10">
                     <div className="responsive-grid-3 w-[90%]">
                       {filterPosts(cat.id).map((post) => (
-                        <div key={post.id}>
-                          <Post info={post} />
+                        <div
+                          className="justify-center items-center flex"
+                          key={post.id}
+                        >
+                          <Post
+                            info={post}
+                            onClick={() =>
+                              (window.location.href = "/post/" + post.id)
+                            }
+                          />
                         </div>
                       ))}
                     </div>
                   </div>
-                </div>
+                </RevealOnScroll>
               )
           )}
         </div>
+        <Footer />
       </BodyThemeManager>
     )
   );
