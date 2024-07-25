@@ -14,6 +14,7 @@ from pathlib import Path
 from datetime import timedelta
 from dotenv import load_dotenv
 import os
+import dj_database_url
 
 load_dotenv()
 
@@ -25,7 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-nma=xi6x2p-crjg^ifqqkapyu1qjd0l=+wn)-rijk_o%$!k3w_"
+SECRET_KEY = os.environ.get('SECRET_KEY')
+DEBUG = os.environ.get('DEBUG')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,6 +41,11 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
+    'DEFAULT_FILTER_BACKENDS': [
+        'django_filters.rest_framework.DjangoFilterBackend'
+    ],
+
+    
 }
 
 SIMPLE_JWT = {
@@ -59,6 +66,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     'django_cleanup.apps.CleanupConfig',
+    'django_filters',
+     "whitenoise.runserver_nostatic",
 ]
 
 MIDDLEWARE = [
@@ -70,6 +79,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware", 
 ]
 
 ROOT_URLCONF = "backend.urls"
@@ -93,18 +103,15 @@ TEMPLATES = [
 WSGI_APPLICATION = "backend.wsgi.application"
 
 
+
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),
-        "PASSWORD": os.getenv("DB_PWD"),
-        "HOST": os.getenv("DB_HOST"),
-        "PORT": os.getenv("DB_PORT"),
-    }
+    "default": dj_database_url.config(
+        default='sqllite:///'+os.path.join('db.sqlite3')
+    )
 }
 
 
@@ -142,9 +149,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = "static/"
-MEDIA_ROOT = "/media/"
+STATIC_ROOT =os.path.join(BASE_DIR, 'static')
 
+MEDIA_ROOT = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
@@ -154,17 +163,28 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CSRF_COOKIE_NAME = "X-CSRFToken"
 
 CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:5173'
+    'http://localhost:5173',
+    'http://localhost:4173',
+    'https://samantha-art-portfolio.fly.dev',
+    'https://sdicecco.duckdns.org',
+    'https://diceccoj.github.io',
 ]
 ALLOWED_HOSTS = [
     'localhost',
-    '127.0.0.1'
+    '127.0.0.1',
+    'samantha-art-portfolio.fly.dev',
+    'sdicecco.duckdns.org',
+    'diceccoj.github.io',
+
 ]
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
+    'http://localhost:4173',
+    'https://samantha-art-portfolio.fly.dev',
+    'https://sdicecco.duckdns.org',
+    'https://diceccoj.github.io',
 ]
 
 CORS_ALLOW_HEADERS = [
