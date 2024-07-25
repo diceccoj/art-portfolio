@@ -38,7 +38,6 @@ const CategoryList = () => {
           const list = [];
           const iter: [string, PostInterface][] = Object.entries(response.data);
           for (const [_id, object] of iter) {
-            console.log(id + " " + typeof id);
             if (id != "null" || object.category == null) list.push(object);
           }
           setPostList(list);
