@@ -3,3 +3,4 @@ tailwind
 react-router-dom
 jwt-token
 react-icons
+react-helmet
