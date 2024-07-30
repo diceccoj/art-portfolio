@@ -110,70 +110,72 @@ const Home = () => {
     return list;
   };
 
-  return (
-    homeTheme != "" && (
-      <BodyThemeManager theme={homeTheme}>
-        <RevealOnScroll className="horizontally-centered mt-40">
-          <div className="responsive-grid w-[80%]">
-            <img
-              src={avatar}
-              className="origin-center scale-75 bg-white active:bg-slate-300 w-[90%] rounded-lg p-3 m-5 shadow-md  hover:scale-[78%] transition-transform "
-            ></img>
-            <div className="mt-10">
-              <h1 className="text-8xl italic text-center hover:scale-[102%] transition-transform">
-                {name}
-              </h1>
-              <p className="underline mt-7 text-center hover:scale-[102%] transition-transform">
-                {email}
-              </p>
-              <p className="small-text-bg mt-2">{description}</p>
-            </div>
+  return homeTheme != "" ? (
+    <BodyThemeManager theme={homeTheme}>
+      <RevealOnScroll className="horizontally-centered mt-40">
+        <div className="responsive-grid w-[80%]">
+          <img
+            src={avatar}
+            className="origin-center scale-75 bg-white active:bg-slate-300 w-[90%] rounded-lg p-3 m-5 shadow-md  hover:scale-[78%] transition-transform "
+          ></img>
+          <div className="mt-10">
+            <h1 className="text-8xl italic text-center hover:scale-[102%] transition-transform">
+              {name}
+            </h1>
+            <p className="underline mt-7 text-center hover:scale-[102%] transition-transform">
+              {email}
+            </p>
+            <p className="small-text-bg mt-2">{description}</p>
           </div>
-        </RevealOnScroll>
-        <div className="horizontally-centered w-[100%] grid">
-          {categoryList.map(
-            (cat) =>
-              filterPosts(cat.id).length > 0 && (
-                <RevealOnScroll key={cat.id} className="w-max h-max">
-                  <h1 className="text-center mt-32 text-6xl">
-                    {cat.category_name}
-                  </h1>
-                  <div className="horizontally-centered mt-10">
-                    <div className="responsive-grid-3 w-[90%]">
-                      {filterPosts(cat.id)
-                        .slice(0, 3)
-                        .map((post) => (
-                          <div
-                            className="justify-center items-center flex"
-                            key={post.id}
-                          >
-                            <Post
-                              info={post}
-                              onClick={() =>
-                                (window.location.href = "/#/post/" + post.id)
-                              }
-                            />
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                  <div className="horizontally-centered">
-                    <button
-                      className="text-center w-[90%] min-h-[40px] bg-white shadow-md hover:scale-[102%] transition-all hover:shadow-lg active:bg-slate-300 text-slate-700 font-bold rounded-full"
-                      onClick={() =>
-                        (window.location.href = "/#/category/" + cat.id)
-                      }
-                    >
-                      {"See more from " + cat.category_name}
-                    </button>
-                  </div>
-                </RevealOnScroll>
-              )
-          )}
         </div>
-        <Footer />
-      </BodyThemeManager>
-    )
+      </RevealOnScroll>
+      <div className="horizontally-centered w-[100%] grid">
+        {categoryList.map(
+          (cat) =>
+            filterPosts(cat.id).length > 0 && (
+              <RevealOnScroll key={cat.id} className="w-max h-max">
+                <h1 className="text-center mt-32 text-6xl">
+                  {cat.category_name}
+                </h1>
+                <div className="horizontally-centered mt-10">
+                  <div className="responsive-grid-3 w-[90%]">
+                    {filterPosts(cat.id)
+                      .slice(0, 3)
+                      .map((post) => (
+                        <div
+                          className="justify-center items-center flex"
+                          key={post.id}
+                        >
+                          <Post
+                            info={post}
+                            onClick={() =>
+                              (window.location.href = "/#/post/" + post.id)
+                            }
+                          />
+                        </div>
+                      ))}
+                  </div>
+                </div>
+                <div className="horizontally-centered">
+                  <button
+                    className="text-center w-[90%] min-h-[40px] bg-white shadow-md hover:scale-[102%] transition-all hover:shadow-lg active:bg-slate-300 text-slate-700 font-bold rounded-full"
+                    onClick={() =>
+                      (window.location.href = "/#/category/" + cat.id)
+                    }
+                  >
+                    {"See more from " + cat.category_name}
+                  </button>
+                </div>
+              </RevealOnScroll>
+            )
+        )}
+      </div>
+      <Footer />
+    </BodyThemeManager>
+  ) : (
+    <div className="centered">
+      <h1 className="text-center text-black">{"Loading"}</h1>
+    </div>
   );
 };
 
