@@ -3,6 +3,7 @@ import api from "../api";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import LoadingIndicator from "./subcomponents/LoadingIndicator";
 import BodyThemeManager from "./subcomponents/BodyThemeManager";
+import { useEffect } from "react";
 
 //The login page that will redirect the user if login is successful
 
@@ -10,6 +11,10 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     setLoading(true);

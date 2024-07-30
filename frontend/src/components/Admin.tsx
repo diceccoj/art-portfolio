@@ -1,5 +1,5 @@
 import BodyThemeManager from "./subcomponents/BodyThemeManager";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SettingsGeneral from "./subcomponents/SettingsGeneral";
 import SettingsCreateProject from "./subcomponents/SettingsCreateProject";
 import SettingsCreateCategory from "./subcomponents/SettingsCreateCategory";
@@ -21,6 +21,10 @@ const Admin = () => {
     "Edit/Delete Projects",
     "Edit/Delete Categories",
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   //For settings page
 

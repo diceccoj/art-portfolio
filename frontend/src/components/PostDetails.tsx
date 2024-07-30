@@ -75,6 +75,7 @@ const PostDetails = () => {
 
   useEffect(() => {
     fetchInformation();
+    window.scrollTo(0, 0);
   }, []);
 
   //getting recommendations

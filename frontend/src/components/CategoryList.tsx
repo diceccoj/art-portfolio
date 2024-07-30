@@ -68,6 +68,7 @@ const CategoryList = () => {
   };
   useEffect(() => {
     fetchInformation();
+    window.scrollTo(0, 0);
   }, []);
 
   return (

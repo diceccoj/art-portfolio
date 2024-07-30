@@ -97,6 +97,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchInformation();
+    window.scrollTo(0, 0);
   }, []);
 
   //for filtering posts by category
