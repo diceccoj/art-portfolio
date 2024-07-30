@@ -27,7 +27,7 @@ function Login() {
           sessionStorage.setItem("csrftoken", response.data.csrfToken);
         else alert("An error occured. Please refresh page.");
       });
-      navigate("/admin"); //navigate to admin on successful login
+      navigate("/#/admin"); //navigate to admin on successful login
     } catch (error) {
       alert(error);
     } finally {

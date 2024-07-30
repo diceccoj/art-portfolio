@@ -171,7 +171,7 @@ const PostDetails = () => {
                       <Post
                         info={post}
                         onClick={() =>
-                          (window.location.href = "/post/" + post.id)
+                          (window.location.href = "/#/post/" + post.id)
                         }
                       />
                     </div>

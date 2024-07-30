@@ -150,7 +150,7 @@ const Home = () => {
                             <Post
                               info={post}
                               onClick={() =>
-                                (window.location.href = "/post/" + post.id)
+                                (window.location.href = "/#/post/" + post.id)
                               }
                             />
                           </div>
@@ -161,7 +161,7 @@ const Home = () => {
                     <button
                       className="text-center w-[90%] min-h-[40px] bg-white shadow-md hover:scale-[102%] transition-all hover:shadow-lg active:bg-slate-300 text-slate-700 font-bold rounded-full"
                       onClick={() =>
-                        (window.location.href = "/category/" + cat.id)
+                        (window.location.href = "/#/category/" + cat.id)
                       }
                     >
                       {"See more from " + cat.category_name}

@@ -89,7 +89,7 @@ const CategoryList = () => {
                 <Post
                   key={post.id}
                   info={post}
-                  onClick={() => (window.location.href = "/post/" + post.id)}
+                  onClick={() => (window.location.href = "/#/post/" + post.id)}
                 />
               </div>
             ))}

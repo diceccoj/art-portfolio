@@ -71,7 +71,7 @@ function ProtectedRoute({ children }: Props) {
         <button
           className="text-blue-500 underline"
           onClick={() => {
-            window.location.href = "/login/";
+            window.location.href = "/#/login/";
           }}
         >
           Login
