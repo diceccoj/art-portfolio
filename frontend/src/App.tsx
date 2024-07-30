@@ -12,9 +12,9 @@ function App() {
     <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login/" element={<Login />} />
         <Route
-          path="/admin"
+          path="/admin/"
           element={
             <ProtectedRoute>
               <Admin />
