@@ -119,14 +119,16 @@ const Home = () => {
             src={avatar}
             className="origin-center scale-75 bg-white active:bg-slate-300 w-[90%] rounded-lg p-3 m-5 shadow-md  hover:scale-[78%] transition-transform "
           ></img>
-          <div className="mt-10">
-            <h1 className="text-8xl italic text-center hover:scale-[102%] transition-transform">
-              {name}
-            </h1>
-            <p className="underline mt-7 text-center hover:scale-[102%] transition-transform">
-              {email}
-            </p>
-            <p className="small-text-bg mt-2">{description}</p>
+          <div className="flex items-center">
+            <div>
+              <h1 className="text-8xl italic text-center hover:scale-[102%] transition-transform">
+                {name}
+              </h1>
+              <p className="underline mt-7 text-center hover:scale-[102%] transition-transform">
+                {email}
+              </p>
+              <p className="small-text-bg mt-2">{description}</p>
+            </div>
           </div>
         </div>
       </RevealOnScroll>
