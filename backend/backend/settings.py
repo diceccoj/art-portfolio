@@ -186,7 +186,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',
     'http://localhost:4173',
     'https://samantha-art-portfolio.fly.dev',
-    'https://art-portfolio-diceccojs-projects.vercel.app/',
+    'https://art-portfolio-diceccojs-projects.vercel.app',
     'https://diceccoj.github.io',
     'https://sam-art.app',
 ]
@@ -194,7 +194,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'samantha-art-portfolio.fly.dev',
-    'art-portfolio-diceccojs-projects.vercel.app/',
+    'art-portfolio-diceccojs-projects.vercel.app',
     'diceccoj.github.io',
     'sam-art.app',
 
@@ -203,7 +203,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:5173',
     'http://localhost:4173',
     'https://samantha-art-portfolio.fly.dev',
-    'https://art-portfolio-diceccojs-projects.vercel.app/',
+    'https://art-portfolio-diceccojs-projects.vercel.app',
     'https://diceccoj.github.io',
     'https://sam-art.app',
 ]
