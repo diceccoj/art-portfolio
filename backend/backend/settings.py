@@ -188,7 +188,7 @@ CSRF_TRUSTED_ORIGINS = [
     'https://samantha-art-portfolio.fly.dev',
     'https://sdicecco.duckdns.org',
     'https://diceccoj.github.io',
-    'https://sam-art.ca',
+    'https://sam-art.app',
 ]
 ALLOWED_HOSTS = [
     'localhost',
@@ -196,7 +196,7 @@ ALLOWED_HOSTS = [
     'samantha-art-portfolio.fly.dev',
     'sdicecco.duckdns.org',
     'diceccoj.github.io',
-    'sam-art.ca',
+    'sam-art.app',
 
 ]
 CORS_ORIGIN_WHITELIST = [
@@ -205,7 +205,7 @@ CORS_ORIGIN_WHITELIST = [
     'https://samantha-art-portfolio.fly.dev',
     'https://sdicecco.duckdns.org',
     'https://diceccoj.github.io',
-    'https://sam-art.ca',
+    'https://sam-art.app',
 ]
 
 CORS_ALLOW_HEADERS = [
