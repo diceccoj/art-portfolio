@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./components/Login";
 import "./App.css";
@@ -9,7 +9,7 @@ import CategoryList from "./components/CategoryList";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
@@ -24,7 +24,7 @@ function App() {
         <Route path="/post/:id" element={<PostDetails />} />
         <Route path="/category/:id" element={<CategoryList />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
