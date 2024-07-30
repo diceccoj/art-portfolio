@@ -174,7 +174,7 @@ const Home = () => {
     </BodyThemeManager>
   ) : (
     <BodyThemeManager theme="sunset" className="centered mt-40">
-      <h1 className="text-center text-black">{"Loading"}</h1>
+      <h1 className="text-center">{"Loading"}</h1>
     </BodyThemeManager>
   );
 };
