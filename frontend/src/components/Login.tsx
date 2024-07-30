@@ -1,6 +1,5 @@
 import { useState } from "react";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import LoadingIndicator from "./subcomponents/LoadingIndicator";
 import BodyThemeManager from "./subcomponents/BodyThemeManager";
@@ -11,7 +10,6 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     setLoading(true);
@@ -27,7 +25,7 @@ function Login() {
           sessionStorage.setItem("csrftoken", response.data.csrfToken);
         else alert("An error occured. Please refresh page.");
       });
-      navigate("/#/admin"); //navigate to admin on successful login
+      window.location.href = "/#/admin/"; //navigate to admin on successful login
     } catch (error) {
       alert(error);
     } finally {
