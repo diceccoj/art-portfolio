@@ -173,9 +173,9 @@ const Home = () => {
       <Footer />
     </BodyThemeManager>
   ) : (
-    <div className="centered">
+    <BodyThemeManager theme="sunset" className="centered mt-40">
       <h1 className="text-center text-black">{"Loading"}</h1>
-    </div>
+    </BodyThemeManager>
   );
 };
 
