@@ -4,6 +4,7 @@ import api from "../../api";
 import LoadingIndicator from "./LoadingIndicator";
 import CSRFToken from "./CSRFToken";
 import { CategoryInterface, PostInterface } from "../Interfaces";
+import ThemeOptions from "./ThemeOptions";
 
 //The general post selection. Click to edit contents
 const PostPanel = () => {
@@ -199,15 +200,7 @@ const PostPanel = () => {
             className="rounded-md pl-1 text-black"
             onChange={(e) => setProjectTheme(e.target.value)}
           >
-            <option value="sunset">Sunset</option>
-            <option value="poppy">Poppy</option>
-            <option value="northernlights">Northern Lights</option>
-            <option value="campfire">Campfire</option>
-            <option value="sea">Sea</option>
-            <option value="jungle">Jungle</option>
-            <option value="gemstone">Gemstone</option>
-            <option value="stone">Stone</option>
-            <option value="cave">Cave</option>
+            <ThemeOptions />
           </select>
           <p className="text-sm">
             Will set the background on the project's page

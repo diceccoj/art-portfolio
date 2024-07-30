@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../api";
 import CSRFToken from "./CSRFToken";
 import { SettingsInterface } from "../Interfaces";
+import ThemeOptions from "./ThemeOptions";
 
 const SettingsGeneral = () => {
   //For general section
@@ -145,15 +146,7 @@ const SettingsGeneral = () => {
           className="rounded-md pl-1 text-black h-[30px] "
           onChange={(e) => setHomeTheme(e.target.value)}
         >
-          <option value="sunset">Sunset</option>
-          <option value="poppy">Poppy</option>
-          <option value="northernlights">Northern Lights</option>
-          <option value="campfire">Campfire</option>
-          <option value="sea">Sea</option>
-          <option value="jungle">Jungle</option>
-          <option value="gemstone">Gemstone</option>
-          <option value="stone">Stone</option>
-          <option value="cave">Cave</option>
+          <ThemeOptions />
         </select>
         <p className="text-sm">Will set the theme on the home page</p>
 
