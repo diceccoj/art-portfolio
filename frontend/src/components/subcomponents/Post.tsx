@@ -22,7 +22,7 @@ interface Props {
 const RectangularImage = ({ src, bonus_classes }: RIProps) => {
   const base_classes =
     bonus_classes +
-    " bg-white active:bg-slate-300 w-[400px] rounded-lg p-3 m-5 shadow-md  hover:scale-[102%] transition-transform ";
+    " bg-white active:bg-slate-300 lg:w-[375px] w-[325px] rounded-lg p-3 m-5 shadow-md  hover:scale-[102%] transition-transform ";
 
   return <img src={src} className={base_classes} />;
 };
@@ -37,7 +37,7 @@ const Post = ({ info, _key, onClick, picture = true }: Props) => {
         </div>
       )}
       <div className="flex justify-center">
-        <p className="w-full h-full small-text-bg hover:scale-100 hover:shadow-lg text-wrap">
+        <p className="w-[90%] h-full small-text-bg hover:scale-100 hover:shadow-lg text-wrap">
           {info.title}
         </p>
       </div>

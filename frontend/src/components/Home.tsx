@@ -132,11 +132,11 @@ const Home = () => {
           </div>
         </div>
       </RevealOnScroll>
-      <div className="horizontally-centered w-[100%] grid">
+      <div className="horizontally-centered grid">
         {categoryList.map(
           (cat) =>
             filterPosts(cat.id).length > 0 && (
-              <RevealOnScroll key={cat.id} className="w-max h-max">
+              <RevealOnScroll key={cat.id} className="w-screen h-max">
                 <h1 className="text-center mt-32 text-6xl w-screen">
                   {cat.category_name}
                 </h1>
@@ -148,7 +148,7 @@ const Home = () => {
                         ? "responsive-grid-3"
                         : filterPosts(cat.id).length >= 2
                         ? "responsive-grid"
-                        : "" + " w-[90%] "
+                        : "" + " w-screen "
                     }
                   >
                     {filterPosts(cat.id)
