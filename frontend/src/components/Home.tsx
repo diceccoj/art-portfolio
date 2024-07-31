@@ -137,11 +137,20 @@ const Home = () => {
           (cat) =>
             filterPosts(cat.id).length > 0 && (
               <RevealOnScroll key={cat.id} className="w-max h-max">
-                <h1 className="text-center mt-32 text-6xl">
+                <h1 className="text-center mt-32 text-6xl w-screen">
                   {cat.category_name}
                 </h1>
                 <div className="horizontally-centered mt-10">
-                  <div className="responsive-grid-3 w-[90%]">
+                  <div
+                    className={
+                      //centering based on post list length
+                      filterPosts(cat.id).length > 3
+                        ? "responsive-grid-3"
+                        : filterPosts(cat.id).length >= 2
+                        ? "responsive-grid"
+                        : "" + " w-[90%] "
+                    }
+                  >
                     {filterPosts(cat.id)
                       .slice(0, 3)
                       .map((post) => (
@@ -160,14 +169,19 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="horizontally-centered">
-                  <button
-                    className="text-center w-[90%] min-h-[40px] bg-white shadow-md hover:scale-[102%] transition-all hover:shadow-lg active:bg-slate-300 text-slate-700 font-bold rounded-full"
-                    onClick={() =>
-                      (window.location.href = "/#/category/" + cat.id)
-                    }
-                  >
-                    {"See more from " + cat.category_name}
-                  </button>
+                  {
+                    //will link the category page if there are more posts from category than being displayed
+                    filterPosts(cat.id).length > 3 && (
+                      <button
+                        className="text-center w-[90%] min-h-[40px] bg-white shadow-md hover:scale-[102%] transition-all hover:shadow-lg active:bg-slate-300 text-slate-700 font-bold rounded-full"
+                        onClick={() =>
+                          (window.location.href = "/#/category/" + cat.id)
+                        }
+                      >
+                        {"See more from " + cat.category_name}
+                      </button>
+                    )
+                  }
                 </div>
               </RevealOnScroll>
             )

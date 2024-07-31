@@ -80,6 +80,7 @@ const PostDetails = () => {
 
   //getting recommendations
   useEffect(() => {
+    //setting a list of recommended posts (unless in 'Other' category as posts are most likely unrelated)
     if (category != null) {
       api
         .get("/api/posts/unauth/?category=" + category)

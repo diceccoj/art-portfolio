@@ -97,7 +97,7 @@ const SettingsDeleteCategory = () => {
         <p className="font-bold ml-2 mt-2">{"Warning:"}</p>
         <p className="ml-2 mt-2 mr-2">
           {
-            "Deleting categories will delete all posts under it, only remove them if you are sure. You may also rename them with without any cost."
+            "Deleting categories will delete all posts under it, only remove them if you are sure. You may also rename them without any cost."
           }
         </p>
       </div>
