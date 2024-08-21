@@ -121,7 +121,7 @@ const Home = () => {
           ></img>
           <div className="flex items-center">
             <div>
-              <h1 className="text-8xl italic text-center hover:scale-[102%] transition-transform">
+              <h1 className="text-8xl text-center hover:scale-[102%] transition-transform">
                 {name}
               </h1>
               <p className="underline mt-7 text-center hover:scale-[102%] transition-transform">
@@ -137,7 +137,7 @@ const Home = () => {
           (cat) =>
             filterPosts(cat.id).length > 0 && (
               <RevealOnScroll key={cat.id} className="w-screen h-max">
-                <h1 className="text-center mt-32 text-6xl w-screen">
+                <h1 className="text-center mt-32 text-6xl w-screen p-2">
                   {cat.category_name}
                 </h1>
                 <div className="horizontally-centered mt-10">
